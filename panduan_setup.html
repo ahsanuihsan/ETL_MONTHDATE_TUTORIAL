@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Digital Python: Anaconda, Conda & UV, Oleh: Ihsan Ahsanu Amala (9.044.DB2025)</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary), var(--accent));
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        h2::before {
+            content: "🧪";
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 30px;
+            color: var(--secondary);
+        }
+        
+        p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 2px dotted transparent;
+        }
+        
+        a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        pre::before {
+            content: "$";
+            position: absolute;
+            left: 10px;
+            color: #777;
+        }
+        
+        code {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background: rgba(41, 128, 185, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 25px auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+            transition: transform 0.3s;
+        }
+        
+        img:hover {
+            transform: scale(1.02);
+        }
+        
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+            font-size: 1.1rem;
+        }
+        
+        ul li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        ol {
+            counter-reset: step-counter;
+        }
+        
+        ol li {
+            counter-increment: step-counter;
+        }
+        
+        ol li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            background: var(--secondary);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .note {
+            background: #e8f4fc;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning {
+            background: #fdecea;
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .success {
+            background: #e8f8ef;
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .do-dont {
+            background: #f5f9ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e0e6ed;
+        }
+        
+        .do-dont h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .do-dont h3::before {
+            margin-right: 10px;
+        }
+        
+        .do h3::before {
+            content: "✅";
+        }
+        
+        .dont h3::before {
+            content: "❌";
+        }
+        
+        .do, .dont {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+        
+        .do {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--success);
+        }
+        
+        .dont {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .tabs {
+            display: flex;
+            margin: 20px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+            color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            background: white;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .terminal {
+            position: relative;
+        }
+        
+        .terminal-header {
+            background: #2d2d2d;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            font-family: monospace;
+        }
+        
+        .terminal-buttons {
+            display: flex;
+            margin-right: 15px;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .terminal-button.red {
+            background: #ff5f56;
+        }
+        
+        .terminal-button.yellow {
+            background: #ffbd2e;
+        }
+        
+        .terminal-button.green {
+            background: #27c93f;
+        }
+        
+        .terminal-title {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .terminal-body {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 0 0 8px 8px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        
+        .terminal-body .prompt {
+            color: #27c93f;
+        }
+        
+        .terminal-body .command {
+            color: white;
+        }
+        
+        .terminal-body .output {
+            color: #b3b3b3;
+        }
+        
+        .comparison {
+            display: flex;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        
+        .comparison-item {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        
+        .comparison-item h4 {
+            margin-top: 0;
+            color: var(--primary);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .comparison-item ul {
+            padding-left: 20px;
+        }
+        
+        .comparison-item li::before {
+            content: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .badge-new {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .badge-fast {
+            background: var(--success);
+            color: white;
+        }
+        
+        .badge-easy {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .interactive-demo {
+            background: #f5f9ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #e0e6ed;
+        }
+        
+        .demo-button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+        
+        .demo-button:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .demo-output {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #777;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .comparison {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Lab Digital Python: Anaconda, Conda & UV</h1>
+        <h2>Oleh: Ihsan Ahsanu Amala (9.044.DB2025)</h2>
+        
+        <p>Bayangkan diri Anda sebagai ilmuwan data yang sedang menyiapkan laboratorium canggih untuk eksperimen AI. Setiap proyek membutuhkan alat dan bahan khusus—tanpa ada yang tercampur! Dalam dunia Python, "laboratorium digital" ini disebut <strong>virtual environment</strong>, dan alat seperti Anaconda, Conda, dan UV adalah asisten andal Anda.</p>
+        
+        <div class="note">
+            <strong>✨ Kenapa tutorial ini spesial?</strong> Kami menggabungkan kemudahan Anaconda dengan kecepatan UV, ditampilkan dengan visual menarik dan contoh interaktif untuk membuat belajar lebih menyenangkan!
+        </div>
+        
+        <h2>🛠 Alat-alat Laboratorium Digital Kita</h2>
+        
+        <div class="comparison">
+            <div class="comparison-item">
+                <h4>Anaconda</h4>
+                <ul>
+                    <li>📦 Distribusi Python all-in-one</li>
+                    <li>🧪 Dilengkapi 1,500+ package sains data</li>
+                    <li>🌍 Cocok untuk pemula hingga profesional</li>
+                    <li>🔧 Termasuk Conda, Jupyter, Spyder</li>
+                </ul>
+            </div>
+            <div class="comparison-item">
+                <h4>Conda</h4>
+                <ul>
+                    <li>🛠 Package & environment manager</li>
+                    <li>⚖️ Mendukung multi-language</li>
+                    <li>🧩 Terintegrasi dengan Anaconda</li>
+                    <li>📦 Mengelola binary packages</li>
+                </ul>
+            </div>
+            <div class="comparison-item">
+                <h4>UV <span class="badge badge-new">BARU</span></h4>
+                <ul>
+                    <li>⚡ <span class="badge badge-fast">10-100x lebih cepat</span></li>
+                    <li>🐍 Dibuat oleh tim Astral (pembuat Ruff)</li>
+                    <li>🔌 Kompatibel dengan pip dan requirements.txt</li>
+                    <li>💻 Command line yang intuitif</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>🧪 Mengapa Virtual Environment Penting?</h2>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="terminal-button red"></div>
+                    <div class="terminal-button yellow"></div>
+                    <div class="terminal-button green"></div>
+                </div>
+                <div class="terminal-title">terminal — bash</div>
+            </div>
+            <div class="terminal-body">
+                <div class="prompt">$</div> <span class="command">python -m pip install tensorflow==2.10</span><br>
+                <div class="prompt">$</div> <span class="command">python -m pip install tensorflow==2.15</span><br>
+                <div class="output">ERROR: Cannot install tensorflow==2.10 and tensorflow==2.15 because these package versions have conflicting dependencies.</div>
+            </div>
+        </div>
+        
+        <p>Tanpa virtual environment, Anda akan mengalami <strong>konflik dependency</strong> seperti di atas. Dengan virtual environment:</p>
+        
+        <ul>
+            <li><strong>🔒 Isolasi</strong>: Package proyek A (TensorFlow 2.10) tidak bentrok dengan proyek B (TensorFlow 2.15)</li>
+            <li><strong>📌 Konsistensi</strong>: Tim bisa mereplikasi environment yang sama persis</li>
+            <li><strong>🧹 Kebersihan</strong>: Sistem Python global tetap bersih</li>
+            <li><strong>🔄 Fleksibilitas</strong>: Beralih antar proyek dengan mudah</li>
+        </ul>
+        
+        <h2>🚀 Panduan Setup Lengkap</h2>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'windows')">Windows</div>
+            <div class="tab" onclick="openTab(event, 'macos')">macOS</div>
+            <div class="tab" onclick="openTab(event, 'linux')">Linux</div>
+        </div>
+        
+        <div id="windows" class="tab-content active">
+            <h3>Langkah 1: Install Anaconda</h3>
+            <ol>
+                <li>Download installer dari <a href="https://www.anaconda.com/download" target="_blank">situs resmi Anaconda</a></li>
+                <li>Jalankan installer dan ikuti petunjuk</li>
+                <li>Pilih <strong>"Just Me"</strong> (direkomendasikan)</li>
+                <li>Centang <strong>"Add Anaconda to PATH"</strong> (opsional tapi memudahkan)</li>
+                <li>Verifikasi instalasi:</li>
+            </ol>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-button red"></div>
+                        <div class="terminal-button yellow"></div>
+                        <div class="terminal-button green"></div>
+                    </div>
+                    <div class="terminal-title">Anaconda Prompt</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="prompt">(base) $</div> <span class="command">conda --version</span><br>
+                    <div class="output">conda 23.11.0</div>
+                </div>
+            </div>
+            
+            <img src="https://docs.anaconda.com/_images/win-install-destination.png" alt="Instalasi Anaconda di Windows">
+            
+            <h3>Langkah 2: Buat Environment Conda</h3>
+            <p>Buat environment untuk proyek data science:</p>
+            
+            <pre><code>conda create -n data-science python=3.10</code></pre>
+            
+            <p>Aktifkan environment:</p>
+            
+            <pre><code>conda activate data-science</code></pre>
+            
+            <div class="interactive-demo">
+                <h4>💡 Coba Sendiri!</h4>
+                <p>Buat environment baru dengan nama berbeda:</p>
+                <button class="demo-button" onclick="showDemoOutput('demo1')">Tampilkan Contoh</button>
+                <div id="demo1" class="demo-output">
+                    <pre><code>conda create -n my-project python=3.9
+conda activate my-project</code></pre>
+                </div>
+            </div>
+            
+            <h3>Langkah 3: Install Package dengan Conda</h3>
+            <p>Package dasar untuk data science:</p>
+            
+            <pre><code>conda install numpy pandas matplotlib jupyter scikit-learn</code></pre>
+            
+            <div class="note">
+                <strong>Tip:</strong> Conda lebih baik untuk package sains yang kompleks seperti TensorFlow atau PyTorch karena sudah dikompilasi sebelumnya.
+            </div>
+            
+            <h3>Langkah 4: Integrasikan UV</h3>
+            <p>Dalam environment Conda, install UV untuk manajemen package yang lebih cepat:</p>
+            
+            <pre><code>pip install uv</code></pre>
+            
+            <p>Sekarang Anda bisa menggunakan perintah UV:</p>
+            
+            <pre><code>uv pip install seaborn plotly</code></pre>
+            
+            <div class="success">
+                <strong>🎉 Selamat!</strong> Anda sekarang memiliki environment data science dengan kecepatan UV dan stabilitas Conda!
+            </div>
+        </div>
+        
+        <div id="macos" class="tab-content">
+            <h3>Langkah 1: Install Anaconda</h3>
+            <ol>
+                <li>Download installer untuk macOS dari <a href="https://www.anaconda.com/download" target="_blank">situs resmi</a></li>
+                <li>Buka file .pkg dan ikuti petunjuk instalasi</li>
+                <li>Verifikasi instalasi di Terminal:</li>
+            </ol>
+            
+            <pre><code>conda --version</code></pre>
+            
+            <h3>Langkah 2: Buat Environment</h3>
+            <pre><code>conda create -n data-science python=3.10
+conda activate data-science</code></pre>
+            
+            <h3>Langkah 3: Install UV</h3>
+            <pre><code>pip install uv</code></pre>
+        </div>
+        
+        <div id="linux" class="tab-content">
+            <h3>Langkah 1: Install Anaconda</h3>
+            <ol>
+                <li>Download installer shell script untuk Linux</li>
+                <li>Jalankan di terminal:</li>
+            </ol>
+            
+            <pre><code>bash Anaconda3-2023.09-0-Linux-x86_64.sh</code></pre>
+            
+            <h3>Langkah 2: Buat Environment</h3>
+            <pre><code>conda create -n data-science python=3.10
+conda activate data-science</code></pre>
+            
+            <h3>Langkah 3: Install UV</h3>
+            <pre><code>pip install uv</code></pre>
+        </div>
+        
+        <h2>💡 Best Practices</h2>
+        
+        <div class="do-dont">
+            <div class="do">
+                <h3>Yang Harus Dilakukan</h3>
+                <ul>
+                    <li>Buat environment terpisah untuk setiap proyek</li>
+                    <li>Gunakan Conda untuk package besar (TensorFlow, PyTorch)</li>
+                    <li>Gunakan UV untuk kecepatan instalasi package biasa</li>
+                    <li>Simpan dependensi di <code>environment.yml</code> dan <code>requirements.txt</code></li>
+                    <li>Tambahkan <code>.venv</code> ke <code>.gitignore</code></li>
+                </ul>
+            </div>
+            
+            <div class="dont">
+                <h3>Yang Harus Dihindari</h3>
+                <ul>
+                    <li>Jangan install package global tanpa environment</li>
+                    <li>Hindari mencampur Conda dan pip/UV sembarangan</li>
+                    <li>Jangan abaikan versi Python saat buat environment</li>
+                    <li>Jangan lupa mengekspor dependensi</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>🔗 Referensi & Sumber Belajar</h2>
+        
+        <ul>
+            <li><a href="https://docs.anaconda.com/free/anaconda/install/" target="_blank">📚 Dokumentasi Resmi Anaconda</a></li>
+            <li><a href="https://docs.astral.sh/uv/" target="_blank">⚡ Dokumentasi UV</a></li>
+            <li><a href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html" target="_blank">🌱 Panduan Environment Conda</a></li>
+            <li><a href="https://github.com/astral-sh/uv" target="_blank">💻 Repositori UV di GitHub</a></li>
+        </ul>
+        
+        <div class="interactive-demo">
+            <h4>🧪 Lab Mini: Coba Sendiri!</h4>
+            <p>Buat environment baru dan bandingkan kecepatan UV vs pip:</p>
+            <button class="demo-button" onclick="showDemoOutput('demo2')">Tampilkan Perintah</button>
+            <div id="demo2" class="demo-output">
+                <pre><code># Buat environment baru
+conda create -n speed-test python=3.10 -y
+conda activate speed-test
+
+# Test kecepatan pip
+time pip install numpy pandas matplotlib
+
+# Test kecepatan UV
+time uv pip install numpy pandas matplotlib</code></pre>
+                <p>UV biasanya 10-100x lebih cepat dari pip tradisional!</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2024 Tutorial Lab Digital Python | Fork dan submit via pull request sebelum 13 Juni 2025</p>
+        </footer>
+    </div>
+    
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].className = tabcontent[i].className.replace(" active", "");
+            }
+            
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            document.getElementById(tabName).className += " active";
+            evt.currentTarget.className += " active";
+        }
+        
+        function showDemoOutput(id) {
+            var demo = document.getElementById(id);
+            if (demo.style.display === "block") {
+                demo.style.display = "none";
+            } else {
+                demo.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
