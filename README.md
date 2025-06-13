@@ -1,16 +1,9 @@
-
-# 📚 Panduan Lengkap Setup Anaconda & UV Environment untuk Data Science/AI
-
-**Nama** : Ihsan Ahsanu Amala  
-**Batch** : 9  
-**No. Absen** : 9.044.DB2025
-
 **Halo Eco Techno Leaders! 👋** 
 
 🚀 Panduan Ultimate Setup Anaconda & UV Environment untuk Data Science/AI
-Oleh: Ihsan Ahsanu Amala
-Batch: 9
-ID: 9.044.DB2025
+**Oleh: Ihsan Ahsanu Amala**
+**Batch: 9**
+**ID: 9.044.DB2025**
 
 Halo Tech Explorers! 👨‍💻👩‍💻
 
